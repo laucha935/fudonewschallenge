@@ -1,0 +1,43 @@
+.notice {
+  height: 72vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding: 40px;
+
+  &--title {
+    font-size: 30px;
+    font-weight: 600;
+    font-family: sans-serif;
+  }
+  &--description {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: sans-serif;
+  }
+  &--image {
+    width: 100%;
+  }
+  &--source {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: sans-serif;
+  }
+  &--content {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: sans-serif;
+  }
+
+  &--button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .notice {
+    padding: 0px 30px;
+    &--button {
+      display: inline;
+    }
+  }
+}

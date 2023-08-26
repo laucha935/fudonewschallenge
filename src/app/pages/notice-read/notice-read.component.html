@@ -1,0 +1,12 @@
+<div class="notice">
+  <h1 class="notice--title">{{ notice.title }}</h1>
+  <h4 class="notice--description">{{ notice.description }}</h4>
+  <img class="notice--image" [src]="notice.urlImage" />
+  <p class="notice--source">Source: {{ notice.source }}</p>
+  <p class="notice--content">{{ notice.content }}</p>
+  <app-btn-responsive
+    styleBtn="home"
+    class="notice--button"
+    (actionBtn)="actionButton()"
+  ></app-btn-responsive>
+</div>

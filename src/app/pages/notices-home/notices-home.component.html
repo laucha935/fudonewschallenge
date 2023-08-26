@@ -1,0 +1,32 @@
+<div class="container-all">
+  <div class="loading" *ngIf="isLoading">
+    <div class="rueda"></div>
+    <p>Loading...</p>
+  </div>
+
+  <div
+    class="container-cards"
+    *ngIf="!isLoading"
+    #element
+    (scroll)="scrollEvent($event)"
+  >
+    <div
+      class="card"
+      *ngFor="let notice of notices"
+      (click)="clickCard(notice)"
+    >
+      <img class="img-notice" [src]="notice.urlToImage" />
+      <div class="desc-container">
+        <h1 class="title">{{ notice.title }}</h1>
+        <p class="description">{{ notice.description }}</p>
+        <p class="author">Author : {{ notice.author | authorPipe }}</p>
+      </div>
+    </div>
+    <app-btn-responsive
+      class="button"
+      styleBtn="arrow-up"
+      [ngClass]="{ 'disp-inline': showBtnTop }"
+      (actionBtn)="actionButton()"
+    ></app-btn-responsive>
+  </div>
+</div>
