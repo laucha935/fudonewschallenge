@@ -1,6 +1,20 @@
 <nav class="nav">
   <div class="left-element">
-    <img class="img-icon" src="../../../assets/images/new-icon.svg" />
+    <img
+      class="img-icon"
+      (click)="showLatMenu()"
+      src="../../../assets/images/new-icon.svg"
+    />
+    <div class="more-news" [ngClass]="{ 'disp-block': showLateralMenu }">
+      <div class="more-news-container">
+        <a
+          class="more-news-desc"
+          *ngFor="let page of pagesLateralMenu"
+          [href]="page.url"
+          >{{ page.name }}</a
+        >
+      </div>
+    </div>
     <button class="back-element" *ngIf="showBackHome" (click)="goBack()">
       Back to news
     </button>

@@ -18,6 +18,35 @@
     .img-icon {
       width: 30px;
       height: 30px;
+      cursor: pointer;
+    }
+
+    .disp-block {
+      display: block !important;
+    }
+
+    .more-news {
+      display: none;
+      position: absolute;
+      background-color: #eee5e5;
+      width: 250px;
+      height: 300px;
+      top: 35px;
+      left: -1px;
+      .more-news-container {
+        display: flex;
+        flex-direction: column;
+        .more-news-desc {
+          font-family: "Roboto";
+          text-decoration: none;
+          color: #000000;
+          font-size: 20px;
+          padding: 10px 0px 0px 25px;
+        }
+        .more-news-desc:hover {
+          color: #555;
+        }
+      }
     }
 
     .back-element {
