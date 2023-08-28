@@ -2,11 +2,13 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject, takeUntil } from 'rxjs';
 import { Notice } from 'src/app/@shared/models/notice.model';
 import { NoticesService } from 'src/app/@shared/services/notices.service';
 import { SaveNotice } from 'src/app/store/store.actions';
@@ -16,7 +18,7 @@ import { SaveNotice } from 'src/app/store/store.actions';
   templateUrl: './notices-home.component.html',
   styleUrls: ['./notices-home.component.scss'],
 })
-export class NoticesHomeComponent implements OnInit {
+export class NoticesHomeComponent implements OnInit, OnDestroy {
   // Para obtener el scroll del elemento que en este caso es el div contenedor de las cards
   @ViewChild('element') containerElem: ElementRef;
   // Para escuchar el evento de window:scroll
@@ -26,6 +28,7 @@ export class NoticesHomeComponent implements OnInit {
   // Flag para mostrar o esconder el spinner de carga y por ende mostrar las noticias una vez cargadas
   isLoading: boolean;
   // Flag para mostrar el button toTop en relacion al evento de scrolleo
+  unsubscribe$: Subject<boolean>;
   showBtnTop: boolean;
   constructor(
     private notiService: NoticesService,
@@ -35,21 +38,25 @@ export class NoticesHomeComponent implements OnInit {
     this.notices = [];
     this.isLoading = true;
     this.showBtnTop = false;
+    this.unsubscribe$ = new Subject<boolean>();
   }
   ngOnInit(): void {
     this.notiService.showHome$.next(false);
-    this.notiService.getNotices().subscribe((res: any) => {
-      this.notices = res.notices.map((elem: any) => {
-        if (elem.urlToImage === null) {
-          return {
-            ...elem,
-            urlToImage: '../../../assets/images/noticia-defecto.jpeg',
-          };
-        }
-        return elem;
+    this.notiService
+      .getNotices()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res: any) => {
+        this.notices = res.notices.map((elem: any) => {
+          if (elem.urlToImage === null) {
+            return {
+              ...elem,
+              urlToImage: '../../../assets/images/noticia-defecto.jpeg',
+            };
+          }
+          return elem;
+        });
+        this.isLoading = false;
       });
-      this.isLoading = false;
-    });
   }
 
   /**
@@ -88,5 +95,9 @@ export class NoticesHomeComponent implements OnInit {
    */
   actionButton() {
     this.containerElem.nativeElement.scrollTop = 0;
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(true);
   }
 }

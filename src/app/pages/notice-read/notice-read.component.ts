@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject, takeUntil } from 'rxjs';
 import { AppState } from 'src/app/@shared/models/apptate.model';
 import { Notice } from 'src/app/@shared/models/notice.model';
 import { NoticesService } from 'src/app/@shared/services/notices.service';
@@ -10,11 +11,12 @@ import { NoticesService } from 'src/app/@shared/services/notices.service';
   templateUrl: './notice-read.component.html',
   styleUrls: ['./notice-read.component.scss'],
 })
-export class NoticeReadComponent implements OnInit {
+export class NoticeReadComponent implements OnInit, OnDestroy {
   /**
    * Var que contiene la noticia a leer por el user, y mostrarse en la pagina
    */
   notice: Notice;
+  unsubscribe$: Subject<boolean>;
   constructor(
     private store: Store<any>,
     private notiService: NoticesService,
@@ -28,15 +30,19 @@ export class NoticeReadComponent implements OnInit {
       urlImage: '',
       description: '',
     };
+    this.unsubscribe$ = new Subject<boolean>();
   }
 
   ngOnInit(): void {
     this.notiService.showHome$.next(true);
-    this.store.select('store').subscribe((state: AppState) => {
-      if (state.notice) {
-        this.notice = state.notice;
-      }
-    });
+    this.store
+      .select('store')
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((state: AppState) => {
+        if (state.notice) {
+          this.notice = state.notice;
+        }
+      });
   }
 
   /**
@@ -44,5 +50,9 @@ export class NoticeReadComponent implements OnInit {
    */
   actionButton() {
     this.route.navigateByUrl('notices');
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(true);
   }
 }

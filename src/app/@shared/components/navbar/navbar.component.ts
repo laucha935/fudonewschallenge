@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NoticesService } from '../../services/notices.service';
 import { Router } from '@angular/router';
 import { PageLatDesc } from '../../models/pages-lateral.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
+  unsubscribe$: Subject<boolean>;
   /**
    * Flag que permite mostrar o esconder el button
    */
@@ -42,12 +44,15 @@ export class NavbarComponent implements OnInit {
   constructor(private service: NoticesService, private route: Router) {
     this.showBackHome = false;
     this.showLateralMenu = false;
+    this.unsubscribe$ = new Subject<boolean>();
   }
 
   ngOnInit(): void {
-    this.service.showHome$.subscribe((result) => {
-      this.showBackHome = result;
-    });
+    this.service.showHome$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        this.showBackHome = result;
+      });
   }
 
   /**
@@ -62,5 +67,9 @@ export class NavbarComponent implements OnInit {
    */
   showLatMenu() {
     this.showLateralMenu = !this.showLateralMenu;
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(true);
   }
 }
