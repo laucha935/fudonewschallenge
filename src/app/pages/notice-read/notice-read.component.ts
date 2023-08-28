@@ -11,6 +11,9 @@ import { NoticesService } from 'src/app/@shared/services/notices.service';
   styleUrls: ['./notice-read.component.scss'],
 })
 export class NoticeReadComponent implements OnInit {
+  /**
+   * Var que contiene la noticia a leer por el user, y mostrarse en la pagina
+   */
   notice: Notice;
   constructor(
     private store: Store<any>,
@@ -36,6 +39,9 @@ export class NoticeReadComponent implements OnInit {
     });
   }
 
+  /**
+   * Devuelve al user a la home para poder visuzaliar el listado de noticias
+   */
   actionButton() {
     this.route.navigateByUrl('notices');
   }

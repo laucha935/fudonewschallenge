@@ -9,8 +9,17 @@ import { PageLatDesc } from '../../models/pages-lateral.model';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  /**
+   * Flag que permite mostrar o esconder el button
+   */
   showBackHome: boolean;
+  /**
+   * Flag que muestra o esconde el menu lateral de la barra
+   */
   showLateralMenu: boolean;
+  /**
+   * Array de paginas para poder navegar desde las noticias
+   */
   pagesLateralMenu: PageLatDesc[] = [
     {
       name: 'Sports',
@@ -41,10 +50,16 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  /**
+   * Permite al user volver al home para ver las noticias
+   */
   goBack() {
     this.route.navigateByUrl('notices');
   }
 
+  /**
+   * Permite mostrar o esconder el menu lateral
+   */
   showLatMenu() {
     this.showLateralMenu = !this.showLateralMenu;
   }

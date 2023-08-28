@@ -17,10 +17,15 @@ import { SaveNotice } from 'src/app/store/store.actions';
   styleUrls: ['./notices-home.component.scss'],
 })
 export class NoticesHomeComponent implements OnInit {
+  // Para obtener el scroll del elemento que en este caso es el div contenedor de las cards
   @ViewChild('element') containerElem: ElementRef;
+  // Para escuchar el evento de window:scroll
   @HostListener('window:scroll', ['$event'])
+  // Es la variable que se le asigna el array de noticias provenientes de la API
   notices: any;
+  // Flag para mostrar o esconder el spinner de carga y por ende mostrar las noticias una vez cargadas
   isLoading: boolean;
+  // Flag para mostrar el button toTop en relacion al evento de scrolleo
   showBtnTop: boolean;
   constructor(
     private notiService: NoticesService,
@@ -47,6 +52,11 @@ export class NoticesHomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Permite al usuario poder ir a leer una noticia completa a la otra pagina, asignando la noticia en store
+   *@param event contiene la noticia a leer en la otra
+   */
+
   clickCard(event: any) {
     let noticeStore: Notice = {
       author: event.author,
@@ -60,6 +70,11 @@ export class NoticesHomeComponent implements OnInit {
     this.route.navigateByUrl('notices/read-notice');
   }
 
+  /**
+   * Escucha el scrolleo del div contenedor de cards, para poder mostrar el button To Top
+   * @param event
+   */
+
   scrollEvent(event: any) {
     if (this.containerElem.nativeElement.scrollTop > 20) {
       this.showBtnTop = true;
@@ -68,6 +83,9 @@ export class NoticesHomeComponent implements OnInit {
     }
   }
 
+  /**
+   * desliza al usuario hacia arriba de la pantalla en version mobile una vez que scrolleo hacia abajo
+   */
   actionButton() {
     this.containerElem.nativeElement.scrollTop = 0;
   }
