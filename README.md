@@ -1,27 +1,24 @@
-# NoticesPortal
+# Fudonews
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.1.
 
+## Repositorio
+
+La aplicacion se encuentra dentro de la rama Master del repositorio de Github.
+
+## Descripcion
+
+Fudonews es una pequeña aplicación que surge del challenge de Fudo, la cual se inicializa con una pagina home, que consume una API de noticias.
+Al cargarlas las muestra en una serie de tarjetas donde incorporamos Foto, descripcion y autor de la misma.
+
+Luego al seleccionar una card procedemos a ir a otra pagina donde podemos leer la noticia completa, con la opcion de poder volver a la home si queremos visualizar otra noticia.
+
+## Practicas
+
+Dentro del proyecto podemos ver practicas como uso de RXJS para la subscripcion a servicios y subscripcion a eventos en torno al header, REDUX para manejo del store en los datos y poder visualizar la noticia completa, guardando la info en el storage en caso de que se refresque la pantalla no perder los datos.
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Para instalar las dependencias ejecutar el comando `npm i ` previo a la ejecución del código
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Ejecutar el comando `ng serv-o` para ejecutar la aplicacion en si y poder correrla.
