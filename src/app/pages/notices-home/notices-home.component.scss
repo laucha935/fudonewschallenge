@@ -8,9 +8,9 @@
     height: 82vh;
     .card:hover {
       transform: translateY(-10px);
+      transition: all 0.25s;
     }
     .card {
-      transition: all 0.25s;
       background: white;
       width: 250px;
       height: 350px;
