@@ -87,6 +87,9 @@
 
 @media screen and (max-width: 720px) {
   .container-all {
+    .loading {
+      margin-top: 60%;
+    }
     .container-cards {
       .card {
         width: 74%;
